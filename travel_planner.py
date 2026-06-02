@@ -1,13 +1,18 @@
+import os
 import streamlit as st
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
 class TravelPlanner:
     def __init__(self):
         self.client = OpenAI(
-            api_key="ollama",
-            base_url="http://localhost:11434/v1/",
+            api_key=DEEPSEEK_API_KEY,
+            base_url="http://api.deepseek.com",
         )
-        self.model = "deepseek-r1:1.5b"
+        self.model = "deepseek-reasoner"
 
     def process_request(self, system_prompt: str, user_prompt: str) -> str:
         try:
@@ -101,10 +106,10 @@ def main():
     st.set_page_config(
         page_title="DeepSeek R1 Travel Assistant", page_icon="✈️", layout="wide"
     )
-    st.title("✈️ Local DeepSeek R1 Travel Assistant")
+    st.title("✈️ DeepSeek R1 Travel Assistant")
     st.markdown(
         """
-        Using DeepSeek R1 1.5B model running locally through Ollama
+        Powered by DeepSeek API(chat model).\n
         2022810075 최은아
         """
     )
